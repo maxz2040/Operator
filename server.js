@@ -62,10 +62,15 @@ const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const PORT = process.env.GASTOWN_PORT || 7667;
-const HOST = process.env.HOST || '127.0.0.1';
+// Operator (Matrix Theme): primary env vars are OPERATOR_*; legacy
+// GASTOWN_* still honored for upstream-compat. GT_ROOT defaults to /gt
+// (system layout used by Nebuchadnezzar) but falls back to ~/gt for
+// stock gastown installs.
+const PORT = process.env.OPERATOR_PORT || process.env.GASTOWN_PORT || 7667;
+const HOST = process.env.OPERATOR_HOST || process.env.HOST || '127.0.0.1';
 const HOME = process.env.HOME || os.homedir();
-const GT_ROOT = process.env.GT_ROOT || path.join(HOME, 'gt');
+const GT_ROOT = process.env.GT_ROOT
+  || (fs.existsSync('/gt') ? '/gt' : path.join(HOME, 'gt'));
 const GT_EXECUTABLE = resolveExecutable({
   command: 'gt',
   envVarName: 'GT_BIN',
@@ -1894,7 +1899,8 @@ server.listen(PORT, HOST, () => {
   const displayHost = HOST === '0.0.0.0' || HOST === '::' ? 'localhost' : HOST;
   console.log(`
 ╔══════════════════════════════════════════════════════════╗
-║              GAS TOWN GUI SERVER                         ║
+║          OPERATOR // MATRIX CONSOLE — ONLINE             ║
+║          Driving Nebuchadnezzar                          ║
 ╠══════════════════════════════════════════════════════════╣
 ║  URL:        http://${displayHost}:${PORT}                       ║
 ║  GT_ROOT:    ${GT_ROOT.padEnd(40)}║

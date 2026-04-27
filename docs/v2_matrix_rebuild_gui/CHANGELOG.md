@@ -90,13 +90,80 @@ intact). Map applied:
   cascades through `var(--*)` so most components inherit correctly. Visual
   QA pass scheduled for Phase 3 when running in browser.
 
-## Phase 2 — Reroute to Nebuchadnezzar
+## Phase 2 — Reroute to Nebuchadnezzar (2026-04-27)
 
-_(pending)_
+**Outcome:** Operator boots against our running Nebuchadnezzar with
+zero code adapters. The upstream architecture was already env-var driven
+through `GT_ROOT`, `GT_BIN`, `BD_BIN`, `GASTOWN_PORT`. Phase 2 was a
+small wiring pass plus a startup wrapper.
 
-Will retarget `server.js` and CLI shells from stock gastown to our
-Nebuchadnezzar build. State paths → `/gt/neb/...`. Dolt → port 3307,
-our beads schema. Validate against upstream `CLI-COMPATIBILITY.md`.
+### Smoke-test result (live, against /gt town as of 2026-04-27)
+
+`GET /api/status` returned full state:
+- `name`: `"gt"`, `dolt.port`: 3307, `daemon.running`: true
+- 5 rigs detected: `audit_form_setup, cyber_baseline, datamask, neb, vss`
+- 10 polecats, mayor + deacon active
+- Title tag served: `"Operator — Matrix Console for Nebuchadnezzar"`
+
+`GET /api/doctor`, `/api/convoys`, `/api/mail` all returned 200. No
+adapter code required.
+
+### Changes to `server.js`
+
+```diff
+-const PORT = process.env.GASTOWN_PORT || 7667;
+-const HOST = process.env.HOST || '127.0.0.1';
+-const GT_ROOT = process.env.GT_ROOT || path.join(HOME, 'gt');
++const PORT = process.env.OPERATOR_PORT || process.env.GASTOWN_PORT || 7667;
++const HOST = process.env.OPERATOR_HOST || process.env.HOST || '127.0.0.1';
++const GT_ROOT = process.env.GT_ROOT
++  || (fs.existsSync('/gt') ? '/gt' : path.join(HOME, 'gt'));
+```
+
+Boot banner replaced "GAS TOWN GUI SERVER" with "OPERATOR // MATRIX CONSOLE
+— ONLINE / Driving Nebuchadnezzar".
+
+### Changes to `bin/cli.js`
+
+Full rewrite of the CLI surface:
+- `operator [start|doctor|version|help]` (was `gastown-gui ...`)
+- New env vars `OPERATOR_PORT` and `OPERATOR_HOST` honored as primary,
+  with `GASTOWN_PORT` / `HOST` kept as legacy aliases.
+- Doctor output mentions Nebuchadnezzar build path
+  (`/gt/neb/mayor/rig`).
+- `GT_ROOT` doctor probe falls back to `/gt` before `~/gt`.
+
+### New: `scripts/start-operator.sh`
+
+Boot wrapper that:
+1. Sets `GT_ROOT=/gt` (our system) unless overridden.
+2. Defaults port to 7667; honors `PORT=`, `OPERATOR_PORT=`.
+3. Validates `GT_ROOT` exists and `gt` is in PATH.
+4. Auto-runs `npm install` if `node_modules` missing.
+5. Echoes resolved env (port, gt path, bd path) before launch.
+
+### New: `docs/v2_matrix_rebuild_gui/RUNNING.md`
+
+Full operator manual: env contract, smoke-test endpoints, architecture
+note, stop instructions, two-fork sync ordering.
+
+### Path layout assumptions
+
+The upstream code already used:
+- `path.join(GT_ROOT, rigName, 'mayor', 'rig')` ← our `/gt/<rig>/mayor/rig` ✓
+- `path.join(GT_ROOT, '.events.jsonl')` ← `/gt/.events.jsonl` ✓
+- `path.join(GT_ROOT, '.beads')` ← `/gt/.beads/` ✓
+- `path.join(GT_ROOT, 'mayor')` ← `/gt/mayor/` ✓
+
+All match Nebuchadnezzar's layout, so no path-rewriting was required.
+
+### Out of scope for Phase 2 (deferred to Phase 3)
+
+- Construct Bridge integration: Operator IS the bridge (server.js shells
+  `gt`). The old Next.js dashboard's `construct_bridge/` becomes redundant
+  on dashboard deprecation in Phase 3.
+- README rewrite (will reference RUNNING.md from there).
+- Visual QA pass against running browser (covered in Phase 3 testing).
 
 ## Phase 3 — Test, integrate, deprecate Next.js dashboard
 

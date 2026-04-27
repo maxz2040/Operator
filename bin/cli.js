@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 
 /**
- * Gas Town GUI CLI
+ * Operator CLI — Matrix Console for Nebuchadnezzar
  *
- * Command-line interface for starting the Gas Town GUI server.
+ * Forked from gastown-gui (web3dev1337). Same shape, retargeted.
  *
  * Usage:
- *   gastown-gui [command] [options]
+ *   operator [command] [options]
  *
  * Commands:
- *   start         Start the GUI server (default)
+ *   start         Start the Operator server (default)
+ *   doctor        Check Nebuchadnezzar installation
  *   version       Show version
  *   help          Show help
  *
@@ -18,6 +19,13 @@
  *   --host, -h    Host to bind to (default: 127.0.0.1)
  *   --open, -o    Open browser after starting
  *   --dev         Enable development mode (auto-reload)
+ *
+ * Env vars:
+ *   OPERATOR_PORT  Server port (alias of GASTOWN_PORT for upstream compat)
+ *   OPERATOR_HOST  Server host (alias of HOST)
+ *   GT_ROOT        Gas Town root directory (default: /gt or ~/gt)
+ *   GT_BIN         Path to gt binary (default: PATH lookup)
+ *   BD_BIN         Path to bd binary (default: PATH lookup)
  */
 
 import { spawn, execSync } from 'child_process';
@@ -29,10 +37,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const packageRoot = path.resolve(__dirname, '..');
 
-// Parse arguments
 const args = process.argv.slice(2);
 
-// Check for help/version flags first (before command parsing)
 if (args.includes('--help') || args.includes('-h')) {
   showHelp();
   process.exit(0);
@@ -44,8 +50,14 @@ if (args.includes('--version') || args.includes('-v')) {
 
 const command = args.find(a => !a.startsWith('-')) || 'start';
 const options = {
-  port: getOption(['--port', '-p']) || process.env.GASTOWN_PORT || '7667',
-  host: getOption(['--host', '-h']) || process.env.HOST || '127.0.0.1',
+  port: getOption(['--port', '-p'])
+    || process.env.OPERATOR_PORT
+    || process.env.GASTOWN_PORT
+    || '7667',
+  host: getOption(['--host', '-h'])
+    || process.env.OPERATOR_HOST
+    || process.env.HOST
+    || '127.0.0.1',
   open: hasFlag(['--open', '-o']),
   dev: hasFlag(['--dev']),
 };
@@ -66,47 +78,50 @@ function hasFlag(flags) {
 
 function showHelp() {
   console.log(`
-Gas Town GUI - Web interface for Gas Town multi-agent orchestrator
+Operator — Matrix Console for Nebuchadnezzar
 
 Usage:
-  gastown-gui [command] [options]
+  operator [command] [options]
 
 Commands:
-  start         Start the GUI server (default)
+  start         Start the Operator server (default)
   version       Show version information
-  doctor        Check Gas Town installation
+  doctor        Check Nebuchadnezzar installation
   help          Show this help message
 
 Options:
-  --port, -p <port>   Port to run on (default: 7667, or GASTOWN_PORT env var)
-  --host, -h <host>   Host to bind to (default: 127.0.0.1, or HOST env var)
+  --port, -p <port>   Port to run on (default: 7667, or OPERATOR_PORT env var)
+  --host, -h <host>   Host to bind to (default: 127.0.0.1, or OPERATOR_HOST env var)
   --open, -o          Open browser after starting
   --dev               Enable development mode
 
 Environment Variables:
-  GASTOWN_PORT Server port (default: 7667)
-  HOST         Server host (default: 127.0.0.1)
-  GT_ROOT      Gas Town root directory (default: ~/gt)
+  OPERATOR_PORT  Server port (alias: GASTOWN_PORT) — default 7667
+  OPERATOR_HOST  Server host (alias: HOST) — default 127.0.0.1
+  GT_ROOT        Gas Town root directory — default /gt (or ~/gt fallback)
+  GT_BIN         Path to gt binary — default PATH lookup
+  BD_BIN         Path to bd binary — default PATH lookup
 
 Examples:
-  gastown-gui                    # Start on default port
-  gastown-gui start --port 9234  # Start on custom port
-  gastown-gui start --open       # Start and open browser
-  gastown-gui doctor             # Check gt installation
+  operator                    # Start on default port (7667)
+  operator start --port 9234  # Start on custom port
+  operator start --open       # Start and open browser
+  operator doctor             # Check Nebuchadnezzar installation
 
 Prerequisites:
-  - Gas Town CLI (gt) must be installed and in PATH
-  - GitHub CLI (gh) for PR/issue tracking (optional)
+  - Nebuchadnezzar gt CLI installed and in PATH (or GT_BIN set)
+  - bd (beads) CLI for issue tracking
+  - gh (GitHub CLI) for PR/issue tracking (optional)
 
-More info: https://github.com/web3dev1337/gastown-gui
+Upstream: https://github.com/web3dev1337/gastown-gui (sync via scripts/sync-upstream.sh)
+This fork: https://github.com/maxz2040/Operator
 `);
 }
 
 function showVersion() {
   const packageJson = JSON.parse(fs.readFileSync(path.join(packageRoot, 'package.json'), 'utf8'));
-  console.log(`gastown-gui v${packageJson.version}`);
+  console.log(`operator v${packageJson.version}`);
 
-  // Check gt version
   try {
     const gtVersion = execSync('gt version 2>/dev/null || echo "not installed"', { encoding: 'utf8' }).trim();
     console.log(`gt: ${gtVersion}`);
@@ -114,7 +129,6 @@ function showVersion() {
     console.log('gt: not found in PATH');
   }
 
-  // Check gh version
   try {
     const ghVersion = execSync('gh --version 2>/dev/null | head -1 || echo "not installed"', { encoding: 'utf8' }).trim();
     console.log(`gh: ${ghVersion}`);
@@ -124,12 +138,10 @@ function showVersion() {
 }
 
 function runDoctor() {
-  console.log('Gas Town GUI Doctor\n');
-  console.log('Checking prerequisites...\n');
+  console.log('Operator Doctor — verifying Nebuchadnezzar prerequisites\n');
 
   let allGood = true;
 
-  // Check Node.js version
   const nodeVersion = process.version;
   const major = parseInt(nodeVersion.slice(1).split('.')[0], 10);
   if (major >= 18) {
@@ -139,7 +151,6 @@ function runDoctor() {
     allGood = false;
   }
 
-  // Check gt
   try {
     const gtPath = execSync('which gt 2>/dev/null', { encoding: 'utf8' }).trim();
     const gtVersion = execSync('gt version 2>/dev/null', { encoding: 'utf8' }).trim();
@@ -147,37 +158,32 @@ function runDoctor() {
     console.log(`   Version: ${gtVersion}`);
   } catch {
     console.log('❌ gt not found in PATH');
-    console.log('   Install: npm install -g @gastown/gt');
-    console.log('   Or visit: https://github.com/steveyegge/gastown');
+    console.log('   Build Nebuchadnezzar: cd /gt/neb/mayor/rig && make build');
     allGood = false;
   }
 
-  // Check bd
   try {
     execSync('which bd 2>/dev/null', { encoding: 'utf8' });
     console.log('✅ bd (beads) installed');
   } catch {
-    console.log('⚠️  bd (beads) not found - some features may not work');
+    console.log('⚠️  bd (beads) not found — some features may not work');
   }
 
-  // Check gh
   try {
     const ghVersion = execSync('gh --version 2>/dev/null | head -1', { encoding: 'utf8' }).trim();
     console.log(`✅ GitHub CLI: ${ghVersion}`);
-
-    // Check auth
     try {
       execSync('gh auth status 2>&1', { encoding: 'utf8' });
       console.log('   ✅ Authenticated');
     } catch {
-      console.log('   ⚠️  Not authenticated - run: gh auth login');
+      console.log('   ⚠️  Not authenticated — run: gh auth login');
     }
   } catch {
-    console.log('⚠️  GitHub CLI (gh) not found - PR/issue tracking disabled');
+    console.log('⚠️  GitHub CLI (gh) not found — PR/issue tracking disabled');
   }
 
-  // Check GT_ROOT
-  const gtRoot = process.env.GT_ROOT || path.join(process.env.HOME || '', 'gt');
+  const gtRoot = process.env.GT_ROOT
+    || (fs.existsSync('/gt') ? '/gt' : path.join(process.env.HOME || '', 'gt'));
   if (fs.existsSync(gtRoot)) {
     console.log(`✅ GT_ROOT exists: ${gtRoot}`);
     try {
@@ -185,18 +191,18 @@ function runDoctor() {
         const fullPath = path.join(gtRoot, f);
         return fs.statSync(fullPath).isDirectory() && fs.existsSync(path.join(fullPath, 'config.json'));
       });
-      console.log(`   Found ${rigs.length} rig(s): ${rigs.join(', ') || '(none)'}`);
+      console.log(`   Found ${rigs.length} construct(s): ${rigs.join(', ') || '(none)'}`);
     } catch {
       // Ignore
     }
   } else {
     console.log(`⚠️  GT_ROOT not found: ${gtRoot}`);
-    console.log('   Run: gt install ~/gt');
+    console.log('   Set GT_ROOT explicitly or initialise a town with `gt install`');
   }
 
   console.log('');
   if (allGood) {
-    console.log('✅ All prerequisites met! Run: gastown-gui start');
+    console.log('✅ All prerequisites met. Run: operator start');
   } else {
     console.log('❌ Some prerequisites missing. Fix issues above and try again.');
     process.exit(1);
@@ -204,12 +210,14 @@ function runDoctor() {
 }
 
 function startServer() {
-  console.log(`Starting Gas Town GUI on http://${options.host}:${options.port}...`);
+  console.log(`Starting Operator on http://${options.host}:${options.port}...`);
 
   const env = {
     ...process.env,
-    GASTOWN_PORT: options.port,
+    OPERATOR_PORT: options.port,
+    GASTOWN_PORT: options.port, // legacy alias
     HOST: options.host,
+    OPERATOR_HOST: options.host,
   };
 
   const serverPath = path.join(packageRoot, 'server.js');
@@ -221,7 +229,6 @@ function startServer() {
     cwd: packageRoot,
   });
 
-  // Open browser if requested
   if (options.open) {
     setTimeout(() => {
       const url = `http://${options.host}:${options.port}`;
@@ -244,7 +251,6 @@ function startServer() {
     process.exit(code || 0);
   });
 
-  // Handle signals
   process.on('SIGINT', () => {
     child.kill('SIGINT');
   });
@@ -254,7 +260,6 @@ function startServer() {
   });
 }
 
-// Main
 switch (command) {
   case 'start':
     startServer();
@@ -274,6 +279,6 @@ switch (command) {
     break;
   default:
     console.error(`Unknown command: ${command}`);
-    console.error('Run: gastown-gui help');
+    console.error('Run: operator help');
     process.exit(1);
 }
