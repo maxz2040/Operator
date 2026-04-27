@@ -1,11 +1,11 @@
 {
-  "name": "gastown-gui",
-  "version": "0.9.5",
-  "description": "Web GUI for Gas Town multi-agent orchestrator - A companion interface for steveyegge/gastown",
+  "name": "operator",
+  "version": "0.9.5-matrix.0",
+  "description": "Operator — Matrix-themed console GUI for Nebuchadnezzar. Forked from web3dev1337/gastown-gui.",
   "type": "module",
   "main": "server.js",
   "bin": {
-    "gastown-gui": "./bin/cli.js"
+    "operator": "./bin/cli.js"
   },
   "scripts": {
     "start": "node server.js",
@@ -33,14 +33,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/web3dev1337/gastown-gui.git"
+    "url": "git+https://github.com/maxz2040/Operator.git"
   },
-  "homepage": "https://github.com/web3dev1337/gastown-gui#readme",
+  "homepage": "https://github.com/maxz2040/Operator#readme",
   "bugs": {
-    "url": "https://github.com/web3dev1337/gastown-gui/issues"
+    "url": "https://github.com/maxz2040/Operator/issues"
   },
   "keywords": [
-    "gastown",
+    "nebuchadnezzar",
+    "matrix",
+    "operator",
     "gui",
     "claude",
     "multi-agent",
@@ -48,7 +50,7 @@
     "cli",
     "web-interface"
   ],
-  "author": "web3dev1337",
+  "author": "maxz2040 (matrix theme); upstream: web3dev1337/gastown-gui",
   "license": "MIT",
   "peerDependencies": {
     "@gastown/gt": ">=0.1.0"

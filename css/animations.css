@@ -1,4 +1,38 @@
-/* Gas Town - Animations CSS */
+/* Operator (Matrix Theme) - Animations CSS */
+
+/* === Matrix Theme Overlays ============================================
+ * CRT scanlines + global green glow. Mirror of Nebuchadnezzar Phase 1.
+ * Scanlines are a non-interactive ::before pseudo on body, so they sit
+ * above background but below all content (z-index trick handled by
+ * pointer-events: none).
+ * ====================================================================== */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0)        0px,
+    rgba(0, 0, 0, 0)        2px,
+    rgba(0, 255, 65, 0.04)  2px,
+    rgba(0, 255, 65, 0.04)  3px
+  );
+  mix-blend-mode: screen;
+}
+
+@keyframes matrixGlow {
+  0%, 100% { text-shadow: 0 0 4px rgba(0, 255, 65, 0.6),  0 0 8px rgba(0, 255, 65, 0.3); }
+  50%      { text-shadow: 0 0 8px rgba(0, 255, 65, 0.9),  0 0 16px rgba(0, 255, 65, 0.5); }
+}
+
+.matrix-glow,
+.logo-text,
+.ascii-title {
+  animation: matrixGlow 2.4s ease-in-out infinite;
+}
 
 /* === Keyframes === */
 

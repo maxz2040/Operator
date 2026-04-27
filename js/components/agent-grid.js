@@ -226,7 +226,7 @@ function renderAgentStats(agent) {
 
   if (agent.convoy_id) {
     stats.push(`
-      <span class="agent-stat" title="Convoy">
+      <span class="agent-stat" title="Mission">
         <span class="material-icons">local_shipping</span>${agent.convoy_id.slice(0, 6)}
       </span>
     `);

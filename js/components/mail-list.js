@@ -282,9 +282,9 @@ function buildFilterUI(mail) {
         </div>
 
         <div class="filter-group">
-          <label>Rig</label>
+          <label>Construct</label>
           <select id="mail-rig-filter" class="filter-select">
-            <option value="all">All Rigs</option>
+            <option value="all">All Constructs</option>
             ${rigs.map(rig => `
               <option value="${rig}" ${currentFilters.rig === rig ? 'selected' : ''}>
                 ${rig}

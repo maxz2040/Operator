@@ -1,64 +1,65 @@
-/* CSS Custom Properties - Gas Town Theme */
+/* CSS Custom Properties - Operator (Matrix Theme) */
+/* Forked from Gas Town GUI; palette mirrors Nebuchadnezzar matrix rebuild Phase 1 */
 
 :root {
-  /* === Dark Theme (Default) === */
+  /* === Matrix Theme (Default) === */
 
-  /* Backgrounds */
-  --bg-primary: #0d1117;
-  --bg-secondary: #161b22;
-  --bg-tertiary: #21262d;
-  --bg-elevated: #30363d;
-  --bg-hover: #1f2428;
+  /* Backgrounds — Matrix neon-on-black */
+  --bg-primary: #0D0208;
+  --bg-secondary: #0a1a0a;
+  --bg-tertiary: #0f2a0f;
+  --bg-elevated: #133a13;
+  --bg-hover: #1a4a1a;
 
-  /* Text */
-  --text-primary: #e6edf3;
-  --text-secondary: #8b949e;
-  --text-muted: #6e7681;
-  --text-inverse: #0d1117;
+  /* Text — Matrix green */
+  --text-primary: #00FF41;
+  --text-secondary: #008F11;
+  --text-muted: #003B00;
+  --text-inverse: #0D0208;
 
   /* Borders */
-  --border-default: #30363d;
-  --border-muted: #21262d;
-  --border-accent: #388bfd;
+  --border-default: #008F11;
+  --border-muted: #003B00;
+  --border-accent: #00FF41;
 
-  /* Status Colors (Industrial/Mechanical) */
-  --status-running: #3fb950;
-  --status-working: #d29922;
-  --status-done: #a371f7;
-  --status-stuck: #f85149;
-  --status-idle: #6e7681;
-  --status-dead: #da3633;
+  /* Status Colors — collapsed onto Matrix palette */
+  --status-running: #00FF41;
+  --status-working: #39FF14;
+  --status-done: #00FF41;
+  --status-stuck: #FF003C;
+  --status-idle: #003B00;
+  --status-dead: #FF003C;
 
   /* Accent Colors */
-  --accent-primary: #58a6ff;
-  --accent-secondary: #a371f7;
-  --accent-success: #3fb950;
-  --accent-warning: #d29922;
-  --accent-danger: #f85149;
+  --accent-primary: #00FF41;
+  --accent-secondary: #39FF14;
+  --accent-success: #00FF41;
+  --accent-warning: #39FF14;
+  --accent-danger: #FF003C;
 
   /* Event Type Colors */
-  --event-create: #3fb950;
-  --event-update: #58a6ff;
-  --event-complete: #a371f7;
-  --event-fail: #f85149;
-  --event-delete: #6e7681;
-  --event-mail: #58a6ff;
-  --event-escalation: #d29922;
+  --event-create: #00FF41;
+  --event-update: #00FF41;
+  --event-complete: #39FF14;
+  --event-fail: #FF003C;
+  --event-delete: #003B00;
+  --event-mail: #00FF41;
+  --event-escalation: #39FF14;
 
-  /* Role Colors */
-  --role-mayor: #58a6ff;
-  --role-deacon: #a371f7;
-  --role-witness: #8b5cf6;
-  --role-refinery: #0d9488;
-  --role-polecat: #d29922;
-  --role-crew: #3fb950;
-  --role-dog: #6e7681;
+  /* Role Colors — keep distinguishable shades within Matrix palette */
+  --role-mayor: #00FF41;
+  --role-deacon: #39FF14;
+  --role-witness: #00FF41;
+  --role-refinery: #008F11;
+  --role-polecat: #39FF14;
+  --role-crew: #00FF41;
+  --role-dog: #003B00;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 12px rgba(88, 166, 255, 0.3);
+  /* Shadows — green glow, not blue */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.8);
+  --shadow-glow: 0 0 12px rgba(0, 255, 65, 0.45);
 
   /* Spacing Scale */
   --space-xxs: 2px;
@@ -109,25 +110,28 @@
 }
 
 /* === Light Theme === */
+/* Operator is matrix-only by design. Light theme retained for upstream
+   compatibility but tuned to a "console daylight" palette so it stays
+   coherent if a user toggles it. */
 [data-theme="light"] {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f6f8fa;
-  --bg-tertiary: #eaeef2;
+  --bg-primary: #f0fff4;
+  --bg-secondary: #e0ffe8;
+  --bg-tertiary: #c0ffd0;
   --bg-elevated: #ffffff;
-  --bg-hover: #f3f4f6;
+  --bg-hover: #d8ffd8;
 
-  --text-primary: #1f2328;
-  --text-secondary: #57606a;
-  --text-muted: #8b949e;
-  --text-inverse: #ffffff;
+  --text-primary: #003B00;
+  --text-secondary: #008F11;
+  --text-muted: #006400;
+  --text-inverse: #f0fff4;
 
-  --border-default: #d0d7de;
-  --border-muted: #eaeef2;
-  --border-accent: #0969da;
+  --border-default: #008F11;
+  --border-muted: #b0e0b8;
+  --border-accent: #00FF41;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
+  --shadow-sm: 0 1px 2px rgba(0, 60, 0, 0.08);
+  --shadow-md: 0 4px 8px rgba(0, 60, 0, 0.12);
+  --shadow-lg: 0 8px 16px rgba(0, 60, 0, 0.16);
 }
 
 /* === Scrollbar Styling === */

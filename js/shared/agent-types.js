@@ -1,22 +1,26 @@
 /**
- * Gas Town GUI - Shared Agent Types Configuration
+ * Operator (Matrix Theme) — Shared Agent Types Configuration
  *
  * Centralized configuration for agent type colors, icons, and labels.
  * Used consistently across sidebar, mail, agent grid, and activity feed.
+ *
+ * NOTE: keys (mayor/witness/polecat/etc.) are protocol identifiers — they
+ * MUST match server endpoint paths and CLI role names. Only `label` is
+ * cosmetic and gets the matrix vocab swap.
  */
 
 import { escapeHtml } from '../utils/html.js';
 
-// Agent type configuration with colors and icons
+// Agent type configuration: protocol keys, matrix labels, matrix-palette colors.
 export const AGENT_TYPES = {
-  mayor: { color: '#a855f7', icon: 'account_balance', label: 'Mayor' },
-  witness: { color: '#3b82f6', icon: 'visibility', label: 'Witness' },
-  deacon: { color: '#f59e0b', icon: 'gavel', label: 'Deacon' },
-  refinery: { color: '#ef4444', icon: 'precision_manufacturing', label: 'Refinery' },
-  polecat: { color: '#22c55e', icon: 'smart_toy', label: 'Polecat' },
-  crew: { color: '#06b6d4', icon: 'groups', label: 'Crew' },
-  human: { color: '#ec4899', icon: 'person', label: 'Human' },
-  system: { color: '#6b7280', icon: 'settings', label: 'System' },
+  mayor:    { color: '#00FF41', icon: 'account_balance',         label: 'Architect' },
+  witness:  { color: '#39FF14', icon: 'visibility',              label: 'Witness'   },
+  deacon:   { color: '#39FF14', icon: 'gavel',                   label: 'Deacon'    },
+  refinery: { color: '#FF003C', icon: 'precision_manufacturing', label: 'Refinery'  },
+  polecat:  { color: '#00FF41', icon: 'smart_toy',               label: 'Agent'     },
+  crew:     { color: '#39FF14', icon: 'groups',                  label: 'Operators' },
+  human:    { color: '#00FF41', icon: 'person',                  label: 'Overseer'  },
+  system:   { color: '#008F11', icon: 'settings',                label: 'System'    },
 };
 
 // Status icons for agent states

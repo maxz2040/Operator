@@ -144,7 +144,7 @@ function renderRigCard(rig, index) {
         <div class="rig-stat">
           <span class="material-icons" style="color: ${AGENT_TYPES.polecat.color}">${AGENT_TYPES.polecat.icon}</span>
           <span class="stat-value">${polecatCount}</span>
-          <span class="stat-label">Polecats</span>
+          <span class="stat-label">Agents</span>
         </div>
         <div class="rig-stat">
           <span class="material-icons" style="color: ${AGENT_TYPES.witness.color}">${AGENT_TYPES.witness.icon}</span>

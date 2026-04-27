@@ -698,9 +698,9 @@ async function populateRecipientDropdown(modalElement, preselect = null) {
     const commonGroup = document.createElement('optgroup');
     commonGroup.label = 'Common Recipients';
 
-    // Always include Mayor and Overseer
+    // Always include Architect and Overseer
     const commonRecipients = [
-      { id: 'mayor/', name: 'Mayor', role: 'mayor' },
+      { id: 'mayor/', name: 'Architect', role: 'mayor' },
       { id: 'human', name: 'Human Overseer', role: 'overseer' },
     ];
 

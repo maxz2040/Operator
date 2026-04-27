@@ -222,7 +222,7 @@ function renderStats(status) {
  */
 function renderServiceControls(agentsByRole) {
   const services = [
-    { name: 'mayor', label: 'Mayor', icon: 'account_balance', color: AGENT_TYPES.mayor.color },
+    { name: 'mayor', label: 'Architect', icon: 'account_balance', color: AGENT_TYPES.mayor.color },
     { name: 'deacon', label: 'Deacon', icon: 'settings', color: AGENT_TYPES.deacon.color },
     { name: 'witness', label: 'Witness', icon: 'visibility', color: AGENT_TYPES.witness.color },
     { name: 'refinery', label: 'Refinery', icon: 'precision_manufacturing', color: AGENT_TYPES.refinery.color },

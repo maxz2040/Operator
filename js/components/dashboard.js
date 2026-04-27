@@ -61,9 +61,9 @@ function deriveHealthFromStatus(status) {
   const deacon = agents.find(a => a.name === 'deacon' || a.role === 'health-check');
 
   if (mayor && mayor.running) {
-    checks.push({ name: 'Mayor', status: 'pass', message: 'Running' });
+    checks.push({ name: 'Architect', status: 'pass', message: 'Running' });
   } else if (mayor) {
-    checks.push({ name: 'Mayor', status: 'warn', message: 'Not running' });
+    checks.push({ name: 'Architect', status: 'warn', message: 'Not running' });
   }
 
   if (deacon && deacon.running) {
@@ -86,9 +86,9 @@ function deriveHealthFromStatus(status) {
 
   if (totalPolecats > 0) {
     if (runningPolecats > 0) {
-      checks.push({ name: 'Polecats', status: 'pass', message: `${runningPolecats}/${totalPolecats} running` });
+      checks.push({ name: 'Agents', status: 'pass', message: `${runningPolecats}/${totalPolecats} running` });
     } else {
-      checks.push({ name: 'Polecats', status: 'warn', message: 'None running' });
+      checks.push({ name: 'Agents', status: 'warn', message: 'None running' });
     }
   }
 

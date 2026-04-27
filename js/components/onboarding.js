@@ -249,7 +249,7 @@ const ONBOARDING_STEPS = [
             </div>
             <div class="sling-to">
               <span class="material-icons">smart_toy</span>
-              <span id="sling-preview-target">Polecat</span>
+              <span id="sling-preview-target">Agent</span>
             </div>
           </div>
         </div>

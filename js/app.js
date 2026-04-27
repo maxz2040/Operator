@@ -96,7 +96,7 @@ async function init() {
   }
   isInitialized = true;
 
-  console.log('[App] Initializing Gas Town GUI...');
+  console.log('[App] Initializing Operator (Matrix Console for Nebuchadnezzar)...');
 
   // Set up navigation
   setupNavigation();
@@ -198,28 +198,28 @@ async function init() {
     showMailDetailModal(mail);
   });
 
-  // Handle polecat start/stop/restart actions
+  // Handle agent start/stop/restart actions
   document.addEventListener(POLECAT_ACTION, async (e) => {
     const { rig, name, action, agentId } = e.detail;
     try {
-      showToast(`${action === 'start' ? 'Starting' : action === 'stop' ? 'Stopping' : 'Restarting'} polecat...`, 'info');
+      showToast(`${action === 'start' ? 'Starting' : action === 'stop' ? 'Stopping' : 'Restarting'} agent...`, 'info');
 
       if (action === 'start') {
         await api.startAgent(rig, name);
-        showToast(`Polecat ${name} started`, 'success');
+        showToast(`Agent ${name} started`, 'success');
       } else if (action === 'stop') {
         await api.stopAgent(rig, name);
-        showToast(`Polecat ${name} stopped`, 'success');
+        showToast(`Agent ${name} stopped`, 'success');
       } else if (action === 'restart') {
         await api.restartAgent(rig, name);
-        showToast(`Polecat ${name} restarted`, 'success');
+        showToast(`Agent ${name} restarted`, 'success');
       }
 
       // Refresh the agents list
       document.dispatchEvent(new CustomEvent(STATUS_REFRESH));
     } catch (err) {
-      console.error('Polecat action failed:', err);
-      showToast(`Failed to ${action} polecat: ${err.message}`, 'error');
+      console.error('Agent action failed:', err);
+      showToast(`Failed to ${action} agent: ${err.message}`, 'error');
     }
   });
 
@@ -362,7 +362,7 @@ function connectWebSocket() {
   ws.onopen = () => {
     console.log('[WS] Connected');
     updateConnectionStatus('connected');
-    showToast('Connected to Gas Town', 'success');
+    showToast('Connected to Nebuchadnezzar', 'success');
   };
 
   ws.onclose = () => {

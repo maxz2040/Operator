@@ -11,13 +11,13 @@ import { showToast } from './toast.js';
 const TUTORIAL_STEPS = [
   {
     id: 'welcome',
-    title: 'Welcome to Gas Town!',
+    title: 'Welcome to Operator',
     content: `
-      <p>Gas Town is a <strong>multi-agent orchestrator</strong> for Claude Code.</p>
+      <p><strong>Operator</strong> is the Matrix-themed console for <strong>Nebuchadnezzar</strong> — a multi-agent orchestrator for Claude Code.</p>
       <p>It helps you manage multiple AI agents working together on your codebase.</p>
       <div class="tutorial-concepts">
-        <div class="concept-pill"><span class="material-icons">location_city</span> Town = Your workspace</div>
-        <div class="concept-pill"><span class="material-icons">build</span> Rig = A project/repo</div>
+        <div class="concept-pill"><span class="material-icons">location_city</span> Zion = Your workspace</div>
+        <div class="concept-pill"><span class="material-icons">build</span> Construct = A project/repo</div>
         <div class="concept-pill"><span class="material-icons">group</span> Agents = AI workers</div>
       </div>
       <p>Let's walk through how it works!</p>
@@ -29,34 +29,34 @@ const TUTORIAL_STEPS = [
     id: 'agents',
     title: 'Meet Your Agents',
     content: `
-      <p>Gas Town has different <strong>agent roles</strong>:</p>
+      <p>Nebuchadnezzar has different <strong>agent roles</strong>:</p>
       <div class="role-list">
         <div class="role-item role-mayor">
           <span class="material-icons">account_balance</span>
           <div>
-            <strong>Mayor</strong>
-            <span>Global coordinator - dispatches work across all projects</span>
+            <strong>Architect</strong>
+            <span>Global coordinator — dispatches work across all projects</span>
           </div>
         </div>
         <div class="role-item role-deacon">
           <span class="material-icons">health_and_safety</span>
           <div>
             <strong>Deacon</strong>
-            <span>Health monitor - watches over all agents</span>
+            <span>Health monitor — watches over all agents</span>
           </div>
         </div>
         <div class="role-item role-polecat">
           <span class="material-icons">engineering</span>
           <div>
-            <strong>Polecat</strong>
-            <span>Ephemeral workers - spawned to do specific tasks</span>
+            <strong>Agent</strong>
+            <span>Ephemeral workers — spawned to do specific tasks</span>
           </div>
         </div>
         <div class="role-item role-witness">
           <span class="material-icons">visibility</span>
           <div>
             <strong>Witness</strong>
-            <span>Per-rig coordinator - manages work within a project</span>
+            <span>Per-construct coordinator — manages work within a project</span>
           </div>
         </div>
         <div class="role-item role-refinery">
@@ -73,14 +73,14 @@ const TUTORIAL_STEPS = [
   },
   {
     id: 'mayor-command',
-    title: 'Tell the Mayor What to Build',
+    title: 'Brief the Architect',
     content: `
-      <p>The <strong>Mayor Command Bar</strong> lets you give instructions directly to the Mayor agent.</p>
-      <p>Just type what you want built and the Mayor will:</p>
+      <p>The <strong>Architect Command Bar</strong> lets you give instructions directly to the Architect agent.</p>
+      <p>Just type what you want built and the Architect will:</p>
       <ul>
         <li><span class="material-icons">auto_awesome</span> Break down your request into tasks</li>
-        <li><span class="material-icons">group_work</span> Create a convoy to track the work</li>
-        <li><span class="material-icons">send</span> Sling tasks to available agents</li>
+        <li><span class="material-icons">group_work</span> Create a mission to track the work</li>
+        <li><span class="material-icons">send</span> Jack in tasks to available agents</li>
         <li><span class="material-icons">visibility</span> Monitor progress and report back</li>
       </ul>
       <p><strong>Try it:</strong> Type something like "Create a README file" in the command bar!</p>
@@ -123,10 +123,10 @@ const TUTORIAL_STEPS = [
   },
   {
     id: 'sling',
-    title: 'Slinging Work',
+    title: 'Jacking In',
     content: `
-      <p><strong>Sling</strong> is how you assign work to agents.</p>
-      <p>Think of it like "throwing" a task to a worker:</p>
+      <p><strong>Jack In</strong> is how you load an agent with work.</p>
+      <p>Think of it like plugging into the construct:</p>
       <div class="sling-demo">
         <div class="sling-from">
           <span class="material-icons">description</span>
@@ -134,23 +134,23 @@ const TUTORIAL_STEPS = [
         </div>
         <div class="sling-arrow">
           <span class="material-icons">arrow_forward</span>
-          <span>sling</span>
+          <span>jack in</span>
         </div>
         <div class="sling-to">
           <span class="material-icons">smart_toy</span>
           <span>Agent</span>
         </div>
       </div>
-      <p>The agent catches the work on their <strong>hook</strong> and starts working!</p>
+      <p>The agent catches the work on their <strong>hardline</strong> and starts working!</p>
     `,
     action: null,
     highlight: '#sling-btn',
   },
   {
     id: 'convoys',
-    title: 'Convoys = Batches',
+    title: 'Missions = Batches',
     content: `
-      <p>A <strong>Convoy</strong> groups related work items together.</p>
+      <p>A <strong>Mission</strong> groups related work items together.</p>
       <p>For example, a feature might have multiple beads:</p>
       <ul>
         <li>Design the API</li>
@@ -201,7 +201,7 @@ const TUTORIAL_STEPS = [
     id: 'try-it',
     title: 'Try It Yourself!',
     content: `
-      <p>You're ready to use Gas Town! Here's a quick workflow:</p>
+      <p>You're ready to use Operator! Here's a quick workflow:</p>
       <ol class="workflow-checklist">
         <li>
           <span class="material-icons">check_circle</span>
@@ -209,7 +209,7 @@ const TUTORIAL_STEPS = [
         </li>
         <li>
           <span class="material-icons">check_circle</span>
-          Click <strong>Sling</strong> to assign it to an agent
+          Click <strong>Jack In</strong> to assign it to an agent
         </li>
         <li>
           <span class="material-icons">check_circle</span>
