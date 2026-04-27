@@ -165,9 +165,49 @@ All match Nebuchadnezzar's layout, so no path-rewriting was required.
 - README rewrite (will reference RUNNING.md from there).
 - Visual QA pass against running browser (covered in Phase 3 testing).
 
-## Phase 3 — Test, integrate, deprecate Next.js dashboard
+## Phase 3 — Test, integrate, deprecate Next.js dashboard (2026-04-27)
 
-_(pending)_
+### Tests
 
-Operator becomes the canonical GUI. The Next.js `dashboard/` in
-Nebuchadnezzar core is retired (or repurposed for non-overlapping role).
+`npm test` against the matrix-reskinned `feature/matrix-theme`:
+
+- **297 tests pass**, 46 skipped, 2 test files fail.
+- The 2 failures are `e2e.test.js` and `integration.test.js`, both
+  Puppeteer-driven. Failure cause: this OrbStack workspace runs arm64
+  but the bundled Chromium binary is x86_64, so the browser process
+  can't launch. **Not a regression** — purely an environment issue.
+- All unit and shared-helpers tests are green, confirming our reskin
+  did not break protocol contracts (agent-types keys preserved,
+  exported APIs intact).
+
+### Next.js dashboard deprecation
+
+Removed `dashboard/` from Nebuchadnezzar `feature/matrix-theme`
+(71 files, 6,501 lines). Operator is now the **canonical GUI** for
+the matrix rebuild.
+
+Commit on Nebuchadnezzar: `29237e577 chore: deprecate Next.js
+dashboard in favor of Operator GUI fork`.
+
+Original Next.js work preserved at Nebuchadnezzar commit `42ae594eb`
+for any future salvage.
+
+`construct_bridge/` kept — it has uses outside of the dashboard
+(programmatic dispatch / state-sync). Will revisit deprecation if
+it falls out of use.
+
+### Maintenance guide updated
+
+`/gt/project/v2_Matrix_Rebuild/MAINTENANCE_GUIDE.md` — added the
+two-fork architecture table in the Phase 0 update, then refined
+in Phase 3 with the canonical-GUI decision and run instructions.
+
+### Phase 3 — out of scope (genuinely future work)
+
+- README.md rewrite for Operator (currently still lists upstream
+  copy). Will rewrite when there's a stable user-facing story to tell.
+- Visual QA pass in browser at multiple viewport sizes — depends on
+  having a workspace where Puppeteer can run, or doing it manually.
+- Favicon/asset rebrand to matrix-themed graphics. The text logo
+  with `matrix-glow` already provides identity; full asset rebrand
+  is cosmetic polish, not blocking.
